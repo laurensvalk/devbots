@@ -3,26 +3,49 @@ import time
 import sys
 import ev3dev.ev3 as ev3
 
-def set_speed(motor, speed):
-    motor.speed_sp = speed
-    motor.run_forever()
-
-def waitforstall():
-    while not gimbal.STATE_STALLED in gimbal.state:
-        time.sleep(0.01)    
-
 def eprint(*args, **kwargs): # https://stackoverflow.com/a/14981125
     print(*args, file=sys.stderr, **kwargs)
 
-gimbal  = ev3.MediumMotor('outD')
+class gimbal:
+    def __init__(self, port):
+        self.motor = ev3.MediumMotor('outD')
+        self.set_speed(200)
+        self.wait_for_stall()
+        self.stop()
+        self.motor.position = 0
+        self.goto_motor_angle_at_speed(-600, 300)
+        self.motor.position = 0                  
 
-set_speed(gimbal, 200)
-time.sleep(0.5)
-waitforstall()
+    def get_motor_angle(self):
+        return self.motor.position    
 
-set_speed(gimbal, -200)
-time.sleep(0.5)
-waitforstall()
-set_speed(gimbal, 0)
+    def wait_for_completion(self):
+        while self.motor.STATE_RUNNING in self.motor.state:
+            time.sleep(0.01) 
 
-eprint("Hello, world!")
+    def set_speed(self, speed):
+        self.motor.speed_sp = speed
+        self.motor.run_forever()
+
+    def stop(self):
+        self.motor.command = 'stop'      
+
+    def goto_motor_angle_at_speed(self, target_angle, speed):
+        speed = abs(speed)
+        current_angle = self.motor.position
+        if target_angle < current_angle:
+            speed = -speed
+        self.motor.speed_sp = speed
+        self.motor.position_sp = target_angle
+        self.motor.command = 'run-to-abs-pos'
+        self.wait_for_completion()
+
+    def wait_for_stall(self):
+        while not self.motor.STATE_STALLED in self.motor.state:
+            time.sleep(0.01)   
+
+
+gimbal = gimbal('outD')
+gimbal.goto_motor_angle_at_speed(500,300)
+gimbal.goto_motor_angle_at_speed(0,300)
+eprint(gimbal.get_motor_angle())
