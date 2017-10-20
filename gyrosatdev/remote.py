@@ -117,7 +117,7 @@ while True:
     if remote.down_left():
         gimbal.set_speed_safe(-500)  
     if remote.up_right():
-        kp = -10
+        kp = 6
         gimbal.set_speed_safe(gyro.get_rate()*kp)       
     if remote.top():
         break
