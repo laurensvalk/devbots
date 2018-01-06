@@ -26,7 +26,7 @@ sock.setblocking(False)
 
 for index in range(50):
     time.sleep(0.5)
-    eprint("-----" + str(index) + "-----")
+    eprint("-----" + str(index) +"-----")
     try:
         data = sock.recv(2048).decode('ascii')
         robot_broadcast_data = json.loads(data)
