@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
-import sys
 import time
 import socket
-import pickle
 import json
 
 PORT = 50008
