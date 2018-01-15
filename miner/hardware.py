@@ -60,9 +60,9 @@ class Picker:
 
     # Target positions for the gripper (degrees). 0 corresponds to the gripper all the way open
     target_open = 40
-    target_closed = target_open + 90
-    target_store = target_closed + 135
-    target_purge = target_store + 30    
+    target_closed = 130
+    target_store = 255
+    target_purge = 295
 
     # Speed and tolerance parameters
     abs_speed = 120
