@@ -5,26 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python",
-            "type": "python",
-            "request": "launch",
-            "stopOnEntry": false,
-            "pythonPath": "${config:python.pythonPath}",
-            "program": "${file}",
-            "cwd": "${workspaceFolder}",
-            "env": {},
-            "envFile": "${workspaceFolder}/.env",
-            "debugOptions": [
-                "RedirectOutput"
-            ]
-        },
-        {
             "name": "Server debug",
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
             "pythonPath": "${config:python.pythonPath}",
-            "program": "${workspaceFolder}/server.py",
+            "program": "${workspaceFolder}/debug.py",
             "cwd": "${workspaceFolder}",
             "env": {},
             "envFile": "${workspaceFolder}/.env",
@@ -36,7 +22,7 @@
             "name": "Download and Run",
             "type": "ev3devBrowser",
             "request": "launch",
-            "program": "/home/robot/micropythontest/helloworld.py"
+            "program": "/home/robot/lightvectors/debug.py"
         }
     ]
 }
